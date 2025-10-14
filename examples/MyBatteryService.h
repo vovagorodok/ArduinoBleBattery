@@ -10,9 +10,9 @@ public:
   void checkBatteryLevel() {
     if (Serial.available()) {
       uint8_t level = Serial.parseInt();
-      Serial.print("send battery level: ");
+      Serial.print("update battery level: ");
       Serial.println(level);
-      sendBatteryLevel(level);
+      updateBatteryLevel(level);
     }
   }
 };

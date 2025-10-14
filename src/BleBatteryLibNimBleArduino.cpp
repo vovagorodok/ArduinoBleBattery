@@ -45,7 +45,7 @@ void BleBatteryLib::setBatteryLevel(uint8_t level)
     _levelCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&level), sizeof(uint8_t));
 }
 
-void BleBatteryLib::sendBatteryLevel(uint8_t level)
+void BleBatteryLib::updateBatteryLevel(uint8_t level)
 {
     setBatteryLevel(level);
     _levelCharacteristic->notify();

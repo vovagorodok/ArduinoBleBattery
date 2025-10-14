@@ -37,7 +37,7 @@ void BleBatteryLib::setBatteryLevel(uint8_t level)
     levelCharacteristic.setValue(level);
 }
 
-void BleBatteryLib::sendBatteryLevel(uint8_t level)
+void BleBatteryLib::updateBatteryLevel(uint8_t level)
 {
     levelCharacteristic.setValue(level);
 }

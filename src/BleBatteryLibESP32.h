@@ -17,7 +17,7 @@ public:
 private:
     friend BleBatteryService;
     void setBatteryLevel(uint8_t level);
-    void sendBatteryLevel(uint8_t level);
+    void updateBatteryLevel(uint8_t level);
 
     BLECharacteristic* _levelCharacteristic;
 };

@@ -10,5 +10,5 @@ public:
 
 protected:
     void setBatteryLevel(uint8_t level);
-    void sendBatteryLevel(uint8_t level);
+    void updateBatteryLevel(uint8_t level);
 };
