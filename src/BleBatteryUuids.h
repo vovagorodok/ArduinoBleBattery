@@ -1,0 +1,4 @@
+#pragma once
+
+#define BLE_BATTERY_SERVICE_UUID              "180f"
+#define BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL "2a19"

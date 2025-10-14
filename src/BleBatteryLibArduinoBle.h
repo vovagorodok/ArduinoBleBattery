@@ -1,0 +1,21 @@
+#pragma once
+#include "BleBatteryDefines.h"
+#ifdef BLE_BATTERY_BLE_LIB_ARDUINO_BLE
+#include "BleBatteryUuids.h"
+#include "BleBatteryService.h"
+
+class BleBatteryLib
+{
+public:
+    bool begin(const char* deviceName,
+               BleBatteryService& batteryService);
+    bool begin(BleBatteryService& batteryService);
+
+private:
+    friend BleBatteryService;
+    void setBatteryLevel(uint8_t level);
+    void sendBatteryLevel(uint8_t level);
+};
+
+extern BleBatteryLib ArduinoBleBattery;
+#endif

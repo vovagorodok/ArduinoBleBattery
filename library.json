@@ -1,0 +1,31 @@
+{
+    "name": "ArduinoBleBattery",
+    "version": "0.0.1",
+    "description": "Bluetooth low energy (BLE) library for battery indication",
+    "keywords": "BLE, battery, bluetooth",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/vovagorodok/ArduinoBleBattery"
+    },
+    "authors":
+    [
+      {
+        "name": "vovagorodok",
+        "email": "vovagorodok2@gmail.com",
+        "url": "https://github.com/vovagorodok",
+        "maintainer": true
+      },
+      {
+        "name": "dkwach",
+        "email": "dawid.kwach@gmail.com",
+        "url": "https://github.com/dkwach",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/vovagorodok/ArduinoBleBattery",
+    "headers": ["ArduinoBleBattery.h", "ArduinoBleBatteryMultiservice.h"],
+    "frameworks": "arduino",
+    "platforms": ["*"]
+  }

@@ -1,0 +1,12 @@
+# Datatypes (KEYWORD1)
+ArduinoBleBattery	KEYWORD1
+BleBatteryService	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+initBle	KEYWORD2
+advertiseBle	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)
