@@ -3,6 +3,7 @@
 #ifdef BLE_BATTERY_BLE_LIB_NIM_BLE_ARDUINO
 #include "BleBatteryUuids.h"
 #include "BleBatteryService.h"
+#include "BleBatteryStructs.h"
 
 class BleBatteryLib
 {
@@ -19,7 +20,12 @@ private:
     void setBatteryLevel(uint8_t level);
     void updateBatteryLevel(uint8_t level);
 
+    void setBatteryLevelStatus(const BleBatteryLevelStatus& status);
+    void updateBatteryLevelStatus(const BleBatteryLevelStatus& status);
+
+    BLEService* _service;
     BLECharacteristic* _levelCharacteristic;
+    BLECharacteristic* _levelStatusCharacteristic;
 };
 
 extern BleBatteryLib ArduinoBleBattery;

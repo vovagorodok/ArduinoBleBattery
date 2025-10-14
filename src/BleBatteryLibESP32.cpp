@@ -2,7 +2,9 @@
 #ifdef BLE_BATTERY_BLE_LIB_ESP32
 
 BleBatteryLib::BleBatteryLib():
-    _levelCharacteristic()
+    _service(),
+    _levelCharacteristic(),
+    _levelStatusCharacteristic()
 {}
 
 void BleBatteryLib::begin(const std::string& deviceName,
@@ -24,16 +26,15 @@ void BleBatteryLib::begin(const std::string& deviceName,
 void BleBatteryLib::begin(BLEServer* server,
                           BleBatteryService& batteryService)
 {
-    auto* service = server->createService(BLE_BATTERY_SERVICE_UUID);
+    _service = server->createService(BLE_BATTERY_SERVICE_UUID);
 
-    auto* levelCharacteristic = service->createCharacteristic(
+    _levelCharacteristic = _service->createCharacteristic(
         BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL,
         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
     );
-    _levelCharacteristic = levelCharacteristic;
     batteryService.begin();
 
-    service->start();
+    _service->start();
 }
 
 void BleBatteryLib::setBatteryLevel(uint8_t level)
@@ -45,6 +46,21 @@ void BleBatteryLib::updateBatteryLevel(uint8_t level)
 {
     setBatteryLevel(level);
     _levelCharacteristic->notify();
+}
+
+void BleBatteryLib::setBatteryLevelStatus(const BleBatteryLevelStatus& status)
+{
+    _levelStatusCharacteristic = _service->createCharacteristic(
+        BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS,
+        BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
+    );
+    _levelStatusCharacteristic->setValue((uint8_t*)(&status), sizeof(BleBatteryLevelStatus));
+}
+
+void BleBatteryLib::updateBatteryLevelStatus(const BleBatteryLevelStatus& status)
+{
+    _levelStatusCharacteristic->setValue((uint8_t*)(&status), sizeof(BleBatteryLevelStatus));
+    _levelStatusCharacteristic->notify();
 }
 
 BleBatteryLib ArduinoBleBattery{};
