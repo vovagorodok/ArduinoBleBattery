@@ -2,17 +2,6 @@
 #include <ArduinoBleBattery.h>
 #include "../MyBatteryService.h"
 
-#ifdef BLE_BATTERY_LOGS
-#ifndef ARDUINO_ARCH_ESP32
-extern "C" {
-int _write(int fd, char *ptr, int len) {
-  (void) fd;
-  return Serial.write(ptr, len);
-}
-}
-#endif
-#endif
-
 MyBatteryService batteryService{};
 
 void setup() {
