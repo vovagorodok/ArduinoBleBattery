@@ -110,4 +110,45 @@ private:
     Flags flags;
     PowerState powerState;
 };
+
+using BleBatteryMinutes = uint32_t;
+using BleBatteryUint24 = uint8_t[3];
+
+struct BleBatteryTimeStatus
+{
+    union Flags {
+        struct {
+            bool timeUntilDischargedOnStandbyPresent: 1;
+            bool timeUntilRechargedPresent: 1;
+            uint8_t reserved: 6;
+        };
+        uint8_t value;
+    };
+
+    enum class TimeUntilDischarged: BleBatteryMinutes
+    {
+        Unknown = 0xFFFFFF,
+        Max = 0xFFFFFE,
+    };
+
+    BleBatteryTimeStatus(BleBatteryMinutes timeUntilDischarged):
+        flags()
+    {
+        memcpy(&this->timeUntilDischarged, &timeUntilDischarged, sizeof(BleBatteryUint24));
+    }
+    BleBatteryTimeStatus(TimeUntilDischarged timeUntilDischarged):
+        BleBatteryTimeStatus(static_cast<BleBatteryMinutes>(timeUntilDischarged))
+    {}
+
+
+private:
+    Flags flags;
+    BleBatteryUint24 timeUntilDischarged;
+};
+
+struct BleBatteryCriticalStatus{
+    bool criticalPowerState: 1;
+    bool immediateServiceRequired: 1;
+    uint8_t reserved: 6;
+};
 #pragma pack(pop)

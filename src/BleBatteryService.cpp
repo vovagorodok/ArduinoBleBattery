@@ -23,3 +23,23 @@ void BleBatteryService::updateBatteryLevelStatus(const BleBatteryLevelStatus& st
 {
     ArduinoBleBattery.updateBatteryLevelStatus(status);
 }
+
+void BleBatteryService::createBatteryTimeStatus(const BleBatteryTimeStatus& status)
+{
+    ArduinoBleBattery.createBatteryTimeStatus(status);
+}
+
+void BleBatteryService::updateBatteryTimeStatus(const BleBatteryTimeStatus& status)
+{
+    ArduinoBleBattery.updateBatteryTimeStatus(status);
+}
+
+void BleBatteryService::createBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
+{
+    ArduinoBleBattery.createBatteryCriticalStatus(status);
+}
+
+void BleBatteryService::updateBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
+{
+    ArduinoBleBattery.updateBatteryCriticalStatus(status);
+}

@@ -27,9 +27,15 @@ public:
       BleBatteryLevelStatus::BatteryChargeLevel::Good,
       BleBatteryLevelStatus::ChargingType::UnknownOrNotCharging,
       BleBatteryLevelStatus::ChargingFaultReason{false, false, false});
-    const BleBatteryLevelStatus status(powerState);
+    const BleBatteryLevelStatus levelStatus(powerState);
 
-    createBatteryLevelStatus(status);
+    createBatteryLevelStatus(levelStatus);
+
+    const BleBatteryTimeStatus timeStatus(BleBatteryTimeStatus::TimeUntilDischarged::Max);
+    createBatteryTimeStatus(timeStatus);
+
+    const BleBatteryCriticalStatus criticalStatus{false, false};
+    createBatteryCriticalStatus(criticalStatus);
   }
 };
 

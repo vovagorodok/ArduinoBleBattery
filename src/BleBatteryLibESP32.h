@@ -23,9 +23,17 @@ private:
     void createBatteryLevelStatus(const BleBatteryLevelStatus& status);
     void updateBatteryLevelStatus(const BleBatteryLevelStatus& status);
 
+    void createBatteryTimeStatus(const BleBatteryTimeStatus& status);
+    void updateBatteryTimeStatus(const BleBatteryTimeStatus& status);
+
+    void createBatteryCriticalStatus(const BleBatteryCriticalStatus& status);
+    void updateBatteryCriticalStatus(const BleBatteryCriticalStatus& status);
+
     BLEService* _service;
     BLECharacteristic* _levelCharacteristic;
     BLECharacteristic* _levelStatusCharacteristic;
+    BLECharacteristic* _timeStatusCharacteristic;
+    BLECharacteristic* _criticalStatusCharacteristic;
 };
 
 extern BleBatteryLib ArduinoBleBattery;

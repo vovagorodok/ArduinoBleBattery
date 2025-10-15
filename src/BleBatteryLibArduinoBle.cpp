@@ -6,6 +6,8 @@ namespace
 BLEService service(BLE_BATTERY_SERVICE_UUID);
 BLETypedCharacteristic<BleBatteryLevel> levelCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL, BLERead | BLENotify);
 BLECharacteristic levelStatusCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS, BLERead | BLENotify, sizeof(BleBatteryLevelStatus));
+BLECharacteristic timeStatusCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_TIME_STATUS, BLERead | BLENotify, sizeof(BleBatteryTimeStatus));
+BLECharacteristic criticalStatusCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_CRITICAL_STATUS, BLERead | BLENotify, sizeof(BleBatteryCriticalStatus));
 }
 
 bool BleBatteryLib::begin(const char* deviceName,
@@ -52,6 +54,28 @@ void BleBatteryLib::createBatteryLevelStatus(const BleBatteryLevelStatus& status
 void BleBatteryLib::updateBatteryLevelStatus(const BleBatteryLevelStatus& status)
 {
     levelStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryLevelStatus));
+}
+
+void BleBatteryLib::createBatteryTimeStatus(const BleBatteryTimeStatus& status)
+{
+    service.addCharacteristic(timeStatusCharacteristic);
+    timeStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryTimeStatus));
+}
+
+void BleBatteryLib::updateBatteryTimeStatus(const BleBatteryTimeStatus& status)
+{
+    timeStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryTimeStatus));
+}
+
+void BleBatteryLib::createBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
+{
+    service.addCharacteristic(criticalStatusCharacteristic);
+    criticalStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryCriticalStatus));
+}
+
+void BleBatteryLib::updateBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
+{
+    criticalStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryCriticalStatus));
 }
 
 BleBatteryLib ArduinoBleBattery{};
