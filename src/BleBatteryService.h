@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include "BleBatteryStructs.h"
 
 class BleBatteryService
 {
@@ -9,6 +10,9 @@ public:
     virtual ~BleBatteryService() = default;
 
 protected:
-    void setBatteryLevel(uint8_t level);
-    void updateBatteryLevel(uint8_t level);
+    void setBatteryLevel(BleBatteryLevel level);
+    void updateBatteryLevel(BleBatteryLevel level);
+
+    void createBatteryLevelStatus(const BleBatteryLevelStatus& status);
+    void updateBatteryLevelStatus(const BleBatteryLevelStatus& status);
 };
