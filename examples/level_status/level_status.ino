@@ -19,13 +19,17 @@ public:
   void begin() override {
     MyBatteryService::begin();
 
-    BleBatteryLevelStatus status(BleBatteryLevelStatus::PowerState{
-      .batteryPresent = BleBatteryLevelStatus::BatteryPresent::Yes,
-      .wiredExternalPowerSourceConnected = BleBatteryLevelStatus::WiredExternalPowerSourceConnected::Yes,
-      .wirelessExternalPowerSourceConnected = BleBatteryLevelStatus::WirelessExternalPowerSourceConnected::No,
-      .batteryChargeState = BleBatteryLevelStatus::BatteryChargeState::Charging,
-      .batteryChargeLevel = BleBatteryLevelStatus::BatteryChargeLevel::Good}); 
-    setBatteryLevelStatus(status);
+    const BleBatteryLevelStatus::PowerState powerState(
+      BleBatteryLevelStatus::BatteryPresent::Yes,
+      BleBatteryLevelStatus::WiredExternalPowerSourceConnected::Yes,
+      BleBatteryLevelStatus::WirelessExternalPowerSourceConnected::No,
+      BleBatteryLevelStatus::BatteryChargeState::Charging,
+      BleBatteryLevelStatus::BatteryChargeLevel::Good,
+      BleBatteryLevelStatus::ChargingType::UnknownOrNotCharging,
+      BleBatteryLevelStatus::ChargingFaultReason{false, false, false});
+    const BleBatteryLevelStatus status(powerState);
+
+    createBatteryLevelStatus(status);
   }
 };
 

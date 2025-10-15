@@ -17,10 +17,10 @@ public:
 
 private:
     friend BleBatteryService;
-    void setBatteryLevel(uint8_t level);
-    void updateBatteryLevel(uint8_t level);
+    void setBatteryLevel(BleBatteryLevel level);
+    void updateBatteryLevel(BleBatteryLevel level);
 
-    void setBatteryLevelStatus(const BleBatteryLevelStatus& status);
+    void createBatteryLevelStatus(const BleBatteryLevelStatus& status);
     void updateBatteryLevelStatus(const BleBatteryLevelStatus& status);
 
     BLEService* _service;

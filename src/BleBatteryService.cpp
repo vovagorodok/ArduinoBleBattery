@@ -4,19 +4,19 @@
 void BleBatteryService::begin()
 {}
 
-void BleBatteryService::setBatteryLevel(uint8_t level)
+void BleBatteryService::setBatteryLevel(BleBatteryLevel level)
 {
     ArduinoBleBattery.setBatteryLevel(level);
 }
 
-void BleBatteryService::updateBatteryLevel(uint8_t level)
+void BleBatteryService::updateBatteryLevel(BleBatteryLevel level)
 {
     ArduinoBleBattery.updateBatteryLevel(level);
 }
 
-void BleBatteryService::setBatteryLevelStatus(const BleBatteryLevelStatus& status)
+void BleBatteryService::createBatteryLevelStatus(const BleBatteryLevelStatus& status)
 {
-    ArduinoBleBattery.setBatteryLevelStatus(status);
+    ArduinoBleBattery.createBatteryLevelStatus(status);
 }
 
 void BleBatteryService::updateBatteryLevelStatus(const BleBatteryLevelStatus& status)

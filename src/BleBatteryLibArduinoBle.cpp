@@ -4,7 +4,7 @@
 namespace
 {
 BLEService service(BLE_BATTERY_SERVICE_UUID);
-BLETypedCharacteristic<uint8_t> levelCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL, BLERead | BLENotify);
+BLETypedCharacteristic<BleBatteryLevel> levelCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL, BLERead | BLENotify);
 BLECharacteristic levelStatusCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS, BLERead | BLENotify, sizeof(BleBatteryLevelStatus));
 }
 
@@ -33,17 +33,17 @@ bool BleBatteryLib::begin(BleBatteryService& batteryService)
     return BLE.setAdvertisedService(service);
 }
 
-void BleBatteryLib::setBatteryLevel(uint8_t level)
+void BleBatteryLib::setBatteryLevel(BleBatteryLevel level)
 {
     levelCharacteristic.setValue(level);
 }
 
-void BleBatteryLib::updateBatteryLevel(uint8_t level)
+void BleBatteryLib::updateBatteryLevel(BleBatteryLevel level)
 {
     levelCharacteristic.setValue(level);
 }
 
-void BleBatteryLib::setBatteryLevelStatus(const BleBatteryLevelStatus& status)
+void BleBatteryLib::createBatteryLevelStatus(const BleBatteryLevelStatus& status)
 {
     service.addCharacteristic(levelStatusCharacteristic);
     levelStatusCharacteristic.setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryLevelStatus));

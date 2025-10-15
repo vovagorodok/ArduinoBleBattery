@@ -1,38 +1,42 @@
 #pragma once
 #include <Arduino.h>
 
+using BleBatteryLevel = uint8_t;
+
 #pragma pack(push, 1)
 struct BleBatteryLevelStatus
 {
-    struct Flags
-    {
-        bool identifierPresent: 1;
-        bool batteryLevelPresent: 1;
-        bool additionalStatusPresent: 1;
-        unsigned reserved: 5;
+    union Flags {
+        struct {
+            bool identifierPresent: 1;
+            bool batteryLevelPresent: 1;
+            bool additionalStatusPresent: 1;
+            uint8_t reserved: 5;
+        };
+        uint8_t value;
     };
 
-    enum class BatteryPresent: unsigned
-    {
-        No = 0,
-        Yes = 1,
-    };
-
-    enum class WiredExternalPowerSourceConnected: unsigned
+    enum class BatteryPresent
     {
         No = 0,
         Yes = 1,
-        Unknown = 2,
     };
 
-    enum class WirelessExternalPowerSourceConnected: unsigned
+    enum class WiredExternalPowerSourceConnected
     {
         No = 0,
         Yes = 1,
         Unknown = 2,
     };
 
-    enum class BatteryChargeState: unsigned
+    enum class WirelessExternalPowerSourceConnected
+    {
+        No = 0,
+        Yes = 1,
+        Unknown = 2,
+    };
+
+    enum class BatteryChargeState
     {
         Unknown = 0,
         Charging = 1,
@@ -40,7 +44,7 @@ struct BleBatteryLevelStatus
         DischargingInactive = 3,
     };
 
-    enum class BatteryChargeLevel: unsigned
+    enum class BatteryChargeLevel
     {
         Unknown = 0,
         Good = 1,
@@ -48,50 +52,53 @@ struct BleBatteryLevelStatus
         Critical = 3,
     };
 
-    enum class ChargingType: unsigned
+    enum class ChargingType
     {
-        Unknown = 0,
-        NotCharging = Unknown,
+        UnknownOrNotCharging = 0,
         ConstantCurrent = 1,
         ConstantVoltage = 2,
         Trickle = 3,
         Float = 4,
     };
 
-    struct ChargingFaultReason
+    union ChargingFaultReason
     {
-        bool battery: 1;
-        bool externalPowerSource: 1;
-        bool other: 1;
+        struct {
+            uint16_t battery: 1;
+            uint16_t externalPowerSource: 1;
+            uint16_t other: 1;
+        };
+        uint16_t value;
     };
 
     struct PowerState
     {
-        PowerState(BatteryPresent batteryPresent = BatteryPresent::No,
-                   WiredExternalPowerSourceConnected wiredExternalPowerSourceConnected = WiredExternalPowerSourceConnected::Unknown,
-                   WirelessExternalPowerSourceConnected wirelessExternalPowerSourceConnected = WirelessExternalPowerSourceConnected::Unknown,
-                   BatteryChargeState batteryChargeState = BatteryChargeState::Unknown,
-                   BatteryChargeLevel batteryChargeLevel = BatteryChargeLevel::Unknown,
-                   ChargingType chargingType = ChargingType::Unknown,
-                   ChargingFaultReason chargingFaultReason = {false, false, false}):
-            batteryPresent(static_cast<unsigned>(batteryPresent)),
-            wiredExternalPowerSourceConnected(static_cast<unsigned>(wiredExternalPowerSourceConnected)),
-            wirelessExternalPowerSourceConnected(static_cast<unsigned>(wirelessExternalPowerSourceConnected)),
-            batteryChargeState(static_cast<unsigned>(batteryChargeState)),
-            batteryChargeLevel(static_cast<unsigned>(batteryChargeLevel)),
-            chargingType(static_cast<unsigned>(chargingType)),
-            chargingFaultReason(chargingFaultReason),
+        PowerState(BatteryPresent batteryPresent = {},
+                   WiredExternalPowerSourceConnected wiredExternalPowerSourceConnected = {},
+                   WirelessExternalPowerSourceConnected wirelessExternalPowerSourceConnected = {},
+                   BatteryChargeState batteryChargeState = {},
+                   BatteryChargeLevel batteryChargeLevel = {},
+                   ChargingType chargingType = {},
+                   ChargingFaultReason chargingFaultReason = {}):
+            batteryPresent(static_cast<uint16_t>(batteryPresent)),
+            wiredExternalPowerSourceConnected(static_cast<uint16_t>(wiredExternalPowerSourceConnected)),
+            wirelessExternalPowerSourceConnected(static_cast<uint16_t>(wirelessExternalPowerSourceConnected)),
+            batteryChargeState(static_cast<uint16_t>(batteryChargeState)),
+            batteryChargeLevel(static_cast<uint16_t>(batteryChargeLevel)),
+            chargingType(static_cast<uint16_t>(chargingType)),
+            chargingFaultReason(chargingFaultReason.value),
             reserved()
         {}
 
-        unsigned batteryPresent: 1;
-        unsigned wiredExternalPowerSourceConnected: 2;
-        unsigned wirelessExternalPowerSourceConnected: 2;
-        unsigned batteryChargeState: 2;
-        unsigned batteryChargeLevel: 2;
-        unsigned chargingType: 3;
-        ChargingFaultReason chargingFaultReason;
-        unsigned reserved: 1;
+    private:
+        uint16_t batteryPresent: 1;
+        uint16_t wiredExternalPowerSourceConnected: 2;
+        uint16_t wirelessExternalPowerSourceConnected: 2;
+        uint16_t batteryChargeState: 2;
+        uint16_t batteryChargeLevel: 2;
+        uint16_t chargingType: 3;
+        uint16_t chargingFaultReason: 3;
+        uint16_t reserved: 1;
     };
 
     BleBatteryLevelStatus(PowerState powerState):

@@ -37,18 +37,18 @@ void BleBatteryLib::begin(BLEServer* server,
     _service->start();
 }
 
-void BleBatteryLib::setBatteryLevel(uint8_t level)
+void BleBatteryLib::setBatteryLevel(BleBatteryLevel level)
 {
-    _levelCharacteristic->setValue(reinterpret_cast<uint8_t*>(&level), sizeof(uint8_t));
+    _levelCharacteristic->setValue(reinterpret_cast<uint8_t*>(&level), sizeof(BleBatteryLevel));
 }
 
-void BleBatteryLib::updateBatteryLevel(uint8_t level)
+void BleBatteryLib::updateBatteryLevel(BleBatteryLevel level)
 {
     setBatteryLevel(level);
     _levelCharacteristic->notify();
 }
 
-void BleBatteryLib::setBatteryLevelStatus(const BleBatteryLevelStatus& status)
+void BleBatteryLib::createBatteryLevelStatus(const BleBatteryLevelStatus& status)
 {
     _levelStatusCharacteristic = _service->createCharacteristic(
         BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS,
