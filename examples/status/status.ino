@@ -2,7 +2,7 @@
 #include <ArduinoBleBattery.h>
 #include "../MyBatteryService.h"
 
-class MyBatteryLevelStatusService : public MyBatteryService
+class MyBatteryStatusService : public MyBatteryService
 {
 public:
   void begin() override {
@@ -28,7 +28,7 @@ public:
   }
 };
 
-MyBatteryLevelStatusService batteryService{};
+MyBatteryStatusService batteryService{};
 
 void setup() {
   Serial.begin(115200);
