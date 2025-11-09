@@ -1,7 +1,7 @@
 #include "BleBatteryService.h"
 #include "ArduinoBleBattery.h"
 
-void BleBatteryService::begin()
+void BleBatteryService::handleServiceCreate()
 {}
 
 void BleBatteryService::setBatteryLevel(BleBatteryLevel level)

@@ -37,7 +37,7 @@ bool BleBatteryLib::begin(BLEServer* server,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
         sizeof(BleBatteryLevel)
     );
-    batteryService.begin();
+    batteryService.handleServiceCreate();
 
     return _service->start();
 }

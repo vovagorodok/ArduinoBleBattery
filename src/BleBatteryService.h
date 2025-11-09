@@ -5,7 +5,7 @@
 class BleBatteryService
 {
 public:
-    virtual void begin();
+    virtual void handleServiceCreate();
 
     virtual ~BleBatteryService() = default;
 

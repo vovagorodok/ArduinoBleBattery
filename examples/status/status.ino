@@ -5,8 +5,8 @@
 class MyBatteryStatusService : public MyBatteryService
 {
 public:
-  void begin() override {
-    MyBatteryService::begin();
+  void handleServiceCreate() override {
+    MyBatteryService::handleServiceCreate();
 
     const BleBatteryLevelStatus::PowerState powerState(
       BleBatteryLevelStatus::BatteryPresent::Yes,
@@ -17,7 +17,6 @@ public:
       BleBatteryLevelStatus::ChargingType::UnknownOrNotCharging,
       BleBatteryLevelStatus::ChargingFaultReason{false, false, false});
     const BleBatteryLevelStatus levelStatus(powerState);
-
     createBatteryLevelStatus(levelStatus);
 
     const BleBatteryTimeStatus timeStatus(BleBatteryTimeStatus::TimeUntilDischarged::Max);

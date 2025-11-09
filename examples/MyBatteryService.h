@@ -4,7 +4,7 @@
 class MyBatteryService : public BleBatteryService
 {
 public:
-  void begin() override {
+  void handleServiceCreate() override {
     setBatteryLevel(100);
   }
   void checkBatteryLevel() {

@@ -29,7 +29,7 @@ bool BleBatteryLib::begin(BleBatteryService& batteryService)
 {
     service.addCharacteristic(levelCharacteristic);
 
-    batteryService.begin();
+    batteryService.handleServiceCreate();
 
     BLE.addService(service);
     return BLE.setAdvertisedService(service);

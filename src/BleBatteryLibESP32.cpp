@@ -34,7 +34,7 @@ void BleBatteryLib::begin(BLEServer* server,
         BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL,
         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
     );
-    batteryService.begin();
+    batteryService.handleServiceCreate();
 
     _service->start();
 }
