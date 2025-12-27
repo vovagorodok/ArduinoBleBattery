@@ -1,5 +1,5 @@
 #pragma once
-#include <Arduino.h>
+#include "BleBatteryDefinesArduino.h"
 
 using BleBatteryLevel = uint8_t;
 

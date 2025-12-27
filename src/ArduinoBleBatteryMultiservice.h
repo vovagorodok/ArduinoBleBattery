@@ -2,7 +2,45 @@
 #include <ArduinoBleBattery.h>
 #include "BleBatteryUuids.h"
 
-#ifdef BLE_BATTERY_BLE_LIB_ARDUINO_BLE
+#if defined(BLE_BATTERY_BLE_LIB_FAKE)
+inline bool initBle(const char* deviceName)
+{
+    return false;
+}
+inline bool advertiseBle(const char* deviceName,
+                         const char* primaryUUID,
+                         const char* secondaryUUID)
+{
+    return false;
+}
+inline bool advertiseBle(const char* deviceName,
+                         const char* secondaryUUID)
+{
+    return false;
+}
+inline BleBatteryServerFake* initBle(const std::string& deviceName)
+{
+    return nullptr;
+}
+inline bool advertiseBle(BleBatteryServerFake* server,
+                         const std::string& deviceName,
+                         const std::string& primaryUUID,
+                         const std::string& secondaryUUID)
+{
+    return false;
+}
+inline bool advertiseBle(const std::string& deviceName,
+                         const std::string& primaryUUID,
+                         const std::string& secondaryUUID)
+{
+    return false;
+}
+inline bool advertiseBle(const std::string& deviceName,
+                         const std::string& secondaryUUID)
+{
+    return false;
+}
+#elif defined(BLE_BATTERY_BLE_LIB_ARDUINO_BLE)
 inline bool initBle(const char* deviceName)
 {
     if (!BLE.begin())

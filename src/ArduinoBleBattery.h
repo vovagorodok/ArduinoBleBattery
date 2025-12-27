@@ -6,6 +6,8 @@
 #include "BleBatteryLibNimBleArduino.h"
 #elif defined(BLE_BATTERY_BLE_LIB_ESP32)
 #include "BleBatteryLibESP32.h"
+#elif defined(BLE_BATTERY_BLE_LIB_FAKE)
+#include "BleBatteryLibFake.h"
 #else
 #error "Unsupported BLE library."
 #endif

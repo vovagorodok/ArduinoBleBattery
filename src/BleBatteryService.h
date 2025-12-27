@@ -1,5 +1,5 @@
 #pragma once
-#include <Arduino.h>
+#include "BleBatteryDefinesArduino.h"
 #include "BleBatteryStructs.h"
 
 class BleBatteryService
