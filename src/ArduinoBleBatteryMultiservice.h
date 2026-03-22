@@ -104,6 +104,9 @@ inline bool advertiseBle(BLEServer* server,
     #ifdef BLE_BATTERY_BLE_LIB_NIM_BLE_ARDUINO
     return advertising->start();
     #else
+    #ifdef BLE_BATTERY_BLE_LIB_ESP32
+    advertising->start();
+    #endif
     return true;
     #endif
 }
