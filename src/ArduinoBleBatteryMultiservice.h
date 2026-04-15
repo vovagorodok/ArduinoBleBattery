@@ -125,3 +125,9 @@ inline bool advertiseBle(const std::string& deviceName,
     return advertiseBle(deviceName, BLE_BATTERY_SERVICE_UUID, secondaryUUID);
 }
 #endif
+
+#if defined(BLE_BATTERY_BLE_LIB_FAKE)
+using BleBatteryServer = BleBatteryServerFake;
+#elif !defined(BLE_BATTERY_BLE_LIB_ARDUINO_BLE)
+using BleBatteryServer = BLEServer;
+#endif
