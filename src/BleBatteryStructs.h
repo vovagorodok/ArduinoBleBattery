@@ -146,7 +146,8 @@ private:
     BleBatteryUint24 timeUntilDischarged;
 };
 
-struct BleBatteryCriticalStatus{
+struct BleBatteryCriticalStatus
+{
     bool criticalPowerState: 1;
     bool immediateServiceRequired: 1;
     uint8_t reserved: 6;
