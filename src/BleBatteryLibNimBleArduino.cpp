@@ -1,22 +1,21 @@
 #include "BleBatteryLibNimBleArduino.h"
 #ifdef BLE_BATTERY_BLE_LIB_NIM_BLE_ARDUINO
 
-BleBatteryLib::BleBatteryLib():
+BleBatteryLib::BleBatteryLib() :
     _service(),
     _levelCharacteristic(),
     _levelStatusCharacteristic(),
     _timeStatusCharacteristic(),
-    _criticalStatusCharacteristic()
-{}
+    _criticalStatusCharacteristic() {
+}
 
-bool BleBatteryLib::begin(const std::string& deviceName,
-                          BleBatteryService& batteryService)
-{
+bool BleBatteryLib::begin(const std::string& deviceName, BleBatteryService& batteryService) {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
-    if(!begin(server, batteryService))
+    if (!begin(server, batteryService)) {
         return false;
+    }
 
     auto* advertising = server->getAdvertising();
     advertising->addServiceUUID(BLE_BATTERY_SERVICE_UUID);
@@ -28,76 +27,60 @@ bool BleBatteryLib::begin(const std::string& deviceName,
     return advertising->start();
 }
 
-bool BleBatteryLib::begin(BLEServer* server,
-                          BleBatteryService& batteryService)
-{
+bool BleBatteryLib::begin(BLEServer* server, BleBatteryService& batteryService) {
     _service = server->createService(BLE_BATTERY_SERVICE_UUID);
-    _levelCharacteristic = _service->createCharacteristic(
-        BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL,
-        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
-        sizeof(BleBatteryLevel)
-    );
+    _levelCharacteristic =
+        _service->createCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL,
+                                       NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, sizeof(BleBatteryLevel));
     batteryService.handleServiceCreate();
 
     return _service->start();
 }
 
-void BleBatteryLib::setBatteryLevel(BleBatteryLevel level)
-{
+void BleBatteryLib::setBatteryLevel(BleBatteryLevel level) {
     _levelCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&level), sizeof(BleBatteryLevel));
 }
 
-void BleBatteryLib::updateBatteryLevel(BleBatteryLevel level)
-{
+void BleBatteryLib::updateBatteryLevel(BleBatteryLevel level) {
     setBatteryLevel(level);
     _levelCharacteristic->notify();
 }
 
-void BleBatteryLib::createBatteryLevelStatus(const BleBatteryLevelStatus& status)
-{
-    _levelStatusCharacteristic = _service->createCharacteristic(
-        BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS,
-        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
-        sizeof(BleBatteryLevelStatus)
-    );
+void BleBatteryLib::createBatteryLevelStatus(const BleBatteryLevelStatus& status) {
+    _levelStatusCharacteristic =
+        _service->createCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_LEVEL_STATUS,
+                                       NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, sizeof(BleBatteryLevelStatus));
     _levelStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryLevelStatus));
 }
 
-void BleBatteryLib::updateBatteryLevelStatus(const BleBatteryLevelStatus& status)
-{
+void BleBatteryLib::updateBatteryLevelStatus(const BleBatteryLevelStatus& status) {
     _levelStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryLevelStatus));
     _levelStatusCharacteristic->notify();
 }
 
-void BleBatteryLib::createBatteryTimeStatus(const BleBatteryTimeStatus& status)
-{
-    _timeStatusCharacteristic = _service->createCharacteristic(
-        BLE_BATTERY_CHARACTERISTIC_UUID_TIME_STATUS,
-        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
-        sizeof(BleBatteryTimeStatus)
-    );
+void BleBatteryLib::createBatteryTimeStatus(const BleBatteryTimeStatus& status) {
+    _timeStatusCharacteristic =
+        _service->createCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_TIME_STATUS,
+                                       NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, sizeof(BleBatteryTimeStatus));
     _timeStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryTimeStatus));
 }
 
-void BleBatteryLib::updateBatteryTimeStatus(const BleBatteryTimeStatus& status)
-{
+void BleBatteryLib::updateBatteryTimeStatus(const BleBatteryTimeStatus& status) {
     _timeStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryTimeStatus));
     _timeStatusCharacteristic->notify();
 }
 
-void BleBatteryLib::createBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
-{
-    _criticalStatusCharacteristic = _service->createCharacteristic(
-        BLE_BATTERY_CHARACTERISTIC_UUID_CRITICAL_STATUS,
-        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
-        sizeof(BleBatteryCriticalStatus)
-    );
-    _criticalStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryCriticalStatus));
+void BleBatteryLib::createBatteryCriticalStatus(const BleBatteryCriticalStatus& status) {
+    _criticalStatusCharacteristic = _service->createCharacteristic(BLE_BATTERY_CHARACTERISTIC_UUID_CRITICAL_STATUS,
+                                                                   NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY,
+                                                                   sizeof(BleBatteryCriticalStatus));
+    _criticalStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status),
+                                            sizeof(BleBatteryCriticalStatus));
 }
 
-void BleBatteryLib::updateBatteryCriticalStatus(const BleBatteryCriticalStatus& status)
-{
-    _criticalStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status), sizeof(BleBatteryCriticalStatus));
+void BleBatteryLib::updateBatteryCriticalStatus(const BleBatteryCriticalStatus& status) {
+    _criticalStatusCharacteristic->setValue(reinterpret_cast<const uint8_t*>(&status),
+                                            sizeof(BleBatteryCriticalStatus));
     _criticalStatusCharacteristic->notify();
 }
 

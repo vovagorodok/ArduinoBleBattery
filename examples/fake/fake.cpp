@@ -4,7 +4,7 @@
 BleBatteryService batteryService{};
 
 int main() {
-  ArduinoBleBattery.begin("Arduino Ble Battery", batteryService);
-  return 0;
+    ArduinoBleBattery.begin("Arduino Ble Battery", batteryService);
+    return 0;
 }
 #endif

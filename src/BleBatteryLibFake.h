@@ -7,18 +7,14 @@
 
 using BleBatteryServerFake = int;
 
-class BleBatteryLib
-{
-public:
-    bool begin(const char* deviceName,
-               BleBatteryService& batteryService);
+class BleBatteryLib {
+ public:
+    bool begin(const char* deviceName, BleBatteryService& batteryService);
     bool begin(BleBatteryService& batteryService);
-    bool begin(const std::string& deviceName,
-               BleBatteryService& batteryService);
-    bool begin(BleBatteryServerFake* server,
-               BleBatteryService& batteryService);
+    bool begin(const std::string& deviceName, BleBatteryService& batteryService);
+    bool begin(BleBatteryServerFake* server, BleBatteryService& batteryService);
 
-private:
+ private:
     friend BleBatteryService;
     void setBatteryLevel(BleBatteryLevel level);
     void updateBatteryLevel(BleBatteryLevel level);

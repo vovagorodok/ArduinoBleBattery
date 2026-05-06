@@ -1,5 +1,6 @@
 #pragma once
 
+// clang-format off: Used IndentPPDirectives with BeforeHash
 #if defined(BLE_BATTERY_LIB_ARDUINO_BLE) || defined(BLE_BATTERY_BLE_LIB_ARDUINO_BLE)
     #include <ArduinoBLE.h>
     #ifndef BLE_BATTERY_BLE_LIB_ARDUINO_BLE
@@ -66,3 +67,4 @@
         #error "Unsupported BLE library. Consider ArduinoBLE or NimBLE-Arduino."
     #endif
 #endif
+// clang-format on

@@ -2,14 +2,13 @@
 #include "BleBatteryDefinesArduino.h"
 #include "BleBatteryStructs.h"
 
-class BleBatteryService
-{
-public:
+class BleBatteryService {
+ public:
     virtual void handleServiceCreate();
 
     virtual ~BleBatteryService() = default;
 
-protected:
+ protected:
     void setBatteryLevel(BleBatteryLevel level);
     void updateBatteryLevel(BleBatteryLevel level);
 

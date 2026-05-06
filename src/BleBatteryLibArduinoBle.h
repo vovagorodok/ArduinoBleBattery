@@ -4,14 +4,12 @@
 #include "BleBatteryUuids.h"
 #include "BleBatteryService.h"
 
-class BleBatteryLib
-{
-public:
-    bool begin(const char* deviceName,
-               BleBatteryService& batteryService);
+class BleBatteryLib {
+ public:
+    bool begin(const char* deviceName, BleBatteryService& batteryService);
     bool begin(BleBatteryService& batteryService);
 
-private:
+ private:
     friend BleBatteryService;
     void setBatteryLevel(BleBatteryLevel level);
     void updateBatteryLevel(BleBatteryLevel level);

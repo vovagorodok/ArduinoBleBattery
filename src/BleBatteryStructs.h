@@ -4,8 +4,7 @@
 using BleBatteryLevel = uint8_t;
 
 #pragma pack(push, 1)
-struct BleBatteryLevelStatus
-{
+struct BleBatteryLevelStatus {
     union Flags {
         struct {
             bool identifierPresent: 1;
@@ -16,44 +15,38 @@ struct BleBatteryLevelStatus
         uint8_t value;
     };
 
-    enum class BatteryPresent
-    {
+    enum class BatteryPresent {
         No = 0,
         Yes = 1,
     };
 
-    enum class WiredExternalPowerSourceConnected
-    {
-        No = 0,
-        Yes = 1,
-        Unknown = 2,
-    };
-
-    enum class WirelessExternalPowerSourceConnected
-    {
+    enum class WiredExternalPowerSourceConnected {
         No = 0,
         Yes = 1,
         Unknown = 2,
     };
 
-    enum class BatteryChargeState
-    {
+    enum class WirelessExternalPowerSourceConnected {
+        No = 0,
+        Yes = 1,
+        Unknown = 2,
+    };
+
+    enum class BatteryChargeState {
         Unknown = 0,
         Charging = 1,
         DischargingActive = 2,
         DischargingInactive = 3,
     };
 
-    enum class BatteryChargeLevel
-    {
+    enum class BatteryChargeLevel {
         Unknown = 0,
         Good = 1,
         Low = 2,
         Critical = 3,
     };
 
-    enum class ChargingType
-    {
+    enum class ChargingType {
         UnknownOrNotCharging = 0,
         ConstantCurrent = 1,
         ConstantVoltage = 2,
@@ -61,8 +54,7 @@ struct BleBatteryLevelStatus
         Float = 4,
     };
 
-    union ChargingFaultReason
-    {
+    union ChargingFaultReason {
         struct {
             uint16_t battery: 1;
             uint16_t externalPowerSource: 1;
@@ -71,15 +63,12 @@ struct BleBatteryLevelStatus
         uint16_t value;
     };
 
-    struct PowerState
-    {
+    struct PowerState {
         PowerState(BatteryPresent batteryPresent = {},
                    WiredExternalPowerSourceConnected wiredExternalPowerSourceConnected = {},
                    WirelessExternalPowerSourceConnected wirelessExternalPowerSourceConnected = {},
-                   BatteryChargeState batteryChargeState = {},
-                   BatteryChargeLevel batteryChargeLevel = {},
-                   ChargingType chargingType = {},
-                   ChargingFaultReason chargingFaultReason = {}):
+                   BatteryChargeState batteryChargeState = {}, BatteryChargeLevel batteryChargeLevel = {},
+                   ChargingType chargingType = {}, ChargingFaultReason chargingFaultReason = {}) :
             batteryPresent(static_cast<uint16_t>(batteryPresent)),
             wiredExternalPowerSourceConnected(static_cast<uint16_t>(wiredExternalPowerSourceConnected)),
             wirelessExternalPowerSourceConnected(static_cast<uint16_t>(wirelessExternalPowerSourceConnected)),
@@ -87,10 +76,9 @@ struct BleBatteryLevelStatus
             batteryChargeLevel(static_cast<uint16_t>(batteryChargeLevel)),
             chargingType(static_cast<uint16_t>(chargingType)),
             chargingFaultReason(chargingFaultReason.value),
-            reserved()
-        {}
+            reserved() {}
 
-    private:
+     private:
         uint16_t batteryPresent: 1;
         uint16_t wiredExternalPowerSourceConnected: 2;
         uint16_t wirelessExternalPowerSourceConnected: 2;
@@ -101,12 +89,11 @@ struct BleBatteryLevelStatus
         uint16_t reserved: 1;
     };
 
-    BleBatteryLevelStatus(PowerState powerState):
+    BleBatteryLevelStatus(PowerState powerState) :
         flags(),
-        powerState(powerState)
-    {}
+        powerState(powerState) {}
 
-private:
+ private:
     Flags flags;
     PowerState powerState;
 };
@@ -114,8 +101,7 @@ private:
 using BleBatteryMinutes = uint32_t;
 using BleBatteryUint24 = uint8_t[3];
 
-struct BleBatteryTimeStatus
-{
+struct BleBatteryTimeStatus {
     union Flags {
         struct {
             bool timeUntilDischargedOnStandbyPresent: 1;
@@ -125,29 +111,24 @@ struct BleBatteryTimeStatus
         uint8_t value;
     };
 
-    enum class TimeUntilDischarged: BleBatteryMinutes
-    {
+    enum class TimeUntilDischarged : BleBatteryMinutes {
         Unknown = 0xFFFFFF,
         Max = 0xFFFFFE,
     };
 
-    BleBatteryTimeStatus(BleBatteryMinutes timeUntilDischarged):
-        flags()
-    {
+    BleBatteryTimeStatus(BleBatteryMinutes timeUntilDischarged) :
+        flags() {
         memcpy(&this->timeUntilDischarged, &timeUntilDischarged, sizeof(BleBatteryUint24));
     }
-    BleBatteryTimeStatus(TimeUntilDischarged timeUntilDischarged):
-        BleBatteryTimeStatus(static_cast<BleBatteryMinutes>(timeUntilDischarged))
-    {}
+    BleBatteryTimeStatus(TimeUntilDischarged timeUntilDischarged) :
+        BleBatteryTimeStatus(static_cast<BleBatteryMinutes>(timeUntilDischarged)) {}
 
-
-private:
+ private:
     Flags flags;
     BleBatteryUint24 timeUntilDischarged;
 };
 
-struct BleBatteryCriticalStatus
-{
+struct BleBatteryCriticalStatus {
     bool criticalPowerState: 1;
     bool immediateServiceRequired: 1;
     uint8_t reserved: 6;

@@ -5,17 +5,14 @@
 #include "BleBatteryService.h"
 #include "BleBatteryStructs.h"
 
-class BleBatteryLib
-{
-public:
+class BleBatteryLib {
+ public:
     BleBatteryLib();
 
-    void begin(const std::string& deviceName,
-               BleBatteryService& batteryService);
-    void begin(BLEServer* server,
-               BleBatteryService& batteryService);
+    void begin(const std::string& deviceName, BleBatteryService& batteryService);
+    void begin(BLEServer* server, BleBatteryService& batteryService);
 
-private:
+ private:
     friend BleBatteryService;
     void setBatteryLevel(BleBatteryLevel level);
     void updateBatteryLevel(BleBatteryLevel level);

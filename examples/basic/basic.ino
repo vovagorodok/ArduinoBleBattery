@@ -5,15 +5,16 @@
 MyBatteryService batteryService{};
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial);
+    Serial.begin(115200);
+    while (!Serial)
+        ;
 
-  ArduinoBleBattery.begin("Arduino Ble Battery", batteryService);
+    ArduinoBleBattery.begin("Arduino Ble Battery", batteryService);
 }
 
 void loop() {
 #ifdef BLE_BATTERY_LIB_ARDUINO_BLE
-  BLE.poll();
+    BLE.poll();
 #endif
-  batteryService.checkBatteryLevel();
+    batteryService.checkBatteryLevel();
 }
