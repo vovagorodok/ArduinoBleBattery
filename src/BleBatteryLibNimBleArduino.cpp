@@ -34,7 +34,11 @@ bool BleBatteryLib::begin(BLEServer* server, BleBatteryService& batteryService) 
                                        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, sizeof(BleBatteryLevel));
     batteryService.handleServiceCreate();
 
+#ifdef BLE_SERIAL_BLE_LIB_NIM_BLE_ARDUINO_V1
     return _service->start();
+#else
+    return true;
+#endif
 }
 
 void BleBatteryLib::setBatteryLevel(BleBatteryLevel level) {
