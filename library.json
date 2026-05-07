@@ -1,6 +1,6 @@
 {
     "name": "ArduinoBleBattery",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Bluetooth low energy (BLE) library for battery indication",
     "keywords": "BLE, battery, bluetooth",
     "repository":
