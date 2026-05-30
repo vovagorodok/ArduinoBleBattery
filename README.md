@@ -1,5 +1,5 @@
 # Arduino BLE Battery
-Library opens posibility to indicate battery via Bluetooth
+Library opens possibility to indicate battery via Bluetooth
 
 ## Supported characteristics
 Supported:
